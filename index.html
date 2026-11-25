@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Northeast of England</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a confident, warm learning trail for Year 9 – clear, friendly, never childish.
+   IDEA: a Tyne & Wear Metro line – every learning station is a stop on the line.
+   PICTURE: an illustrated Quayside at dusk – Tyne Bridge, Glasshouse, Angel on the hill.
+   COLOUR and TYPE: Tyne Bridge green as the dominant field, paper white, Metro yellow accent; Archivo + Atkinson Hyperlegible.
+   LAYOUT: hub (hero, line map, how it works) → one view per station → results grid for the plenary. */
+:root{color-scheme:light dark;
+--bg:light-dark(#f5f3ec,#0b1513);--ink:light-dark(#14211f,#e8eee9);--card:light-dark(#ffffff,#13211e);
+--line:light-dark(#d9ddd5,#26372f);--muted:light-dark(#566561,#a2b4ae);
+--deep:#103d36;--green:#3f7a58;--yel:#ffcf00;--yelink:#1a1a10;
+--ok:light-dark(#1d7a45,#5fd393);--bad:light-dark(#b3261e,#ff8a80);--soft:light-dark(#eef2ea,#182824)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Archivo,system-ui,sans-serif;line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:clamp(36px,6vw,58px);font-weight:800}
+h2{font-size:clamp(28px,4vw,40px);font-weight:800}
+h3{font-size:21px;font-weight:600;margin-bottom:8px}
+p{margin:0 0 12px}
+a{color:inherit}
+button{font:inherit}
+.band{padding:clamp(28px,4vw,64px) max(5vw,16px)}
+.wrap{max-width:1180px;margin:0 auto}
+/* top bar */
+.top{position:sticky;top:0;z-index:5;background:var(--deep);color:#fff;display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px);flex-wrap:wrap}
+.top .brand{font-family:Archivo,system-ui,sans-serif;font-weight:800;font-size:17px;text-decoration:none;display:flex;align-items:center;gap:10px;margin-right:auto}
+.roundel{width:28px;height:28px;border-radius:50%;background:var(--yel);display:grid;place-items:center;color:var(--yelink);font-size:13px;font-weight:800}
+.top nav{display:flex;gap:6px;overflow-x:auto}
+.top nav a{flex:none;text-decoration:none;color:#fff;min-height:40px;display:grid;place-items:center;padding:0 12px;border-radius:20px;font-size:15px;opacity:.85}
+.top nav a[aria-current=true]{background:var(--yel);color:var(--yelink);opacity:1;font-weight:700}
+/* hero */
+.hero{background:var(--deep);color:#fff;padding:clamp(24px,4vw,56px) max(5vw,16px) 0}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(16px,3vw,40px);align-items:end}
+.hero p.lead{font-size:19px;max-width:34em;opacity:.92}
+.kicker{display:inline-block;background:var(--yel);color:var(--yelink);font-weight:700;border-radius:6px;padding:2px 10px;margin-bottom:14px;font-size:15px}
+.scene{width:100%;height:auto;display:block}
+@media(max-width:760px){.hero .wrap{grid-template-columns:minmax(0,1fr)}}
+/* line map */
+.map{position:relative;margin-top:8px}
+.stops{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:relative}
+.stops::before{content:"";position:absolute;left:10%;right:10%;top:34px;height:10px;border-radius:5px;background:var(--yel)}
+.stops li{text-align:center;position:relative}
+.stops a{display:block;text-decoration:none;padding:12px 6px;border-radius:14px}
+.stops a:hover,.stops a:focus-visible{background:var(--soft)}
+.dot{width:46px;height:46px;margin:0 auto 10px;border-radius:50%;background:var(--card);border:6px solid var(--deep);display:grid;place-items:center;font-family:Archivo,system-ui,sans-serif;font-weight:800;font-size:18px;position:relative}
+.done .dot{background:var(--deep);color:var(--yel)}
+.stops b{display:block;font-family:Archivo,system-ui,sans-serif;font-size:17px;line-height:1.2}
+.stops span{display:block;color:var(--muted);font-size:14px;margin-top:4px}
+@media(max-width:700px){.stops{grid-template-columns:minmax(0,1fr)}.stops::before{left:38px;right:auto;top:20px;bottom:20px;width:10px;height:auto}
+.stops a{display:grid;grid-template-columns:56px minmax(0,1fr);text-align:left;align-items:center;gap:10px}.dot{margin:0}.stops b,.stops span{grid-column:2}}
+/* cards & grids */
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.howto .card h3{display:flex;gap:10px;align-items:center}
+.ico{width:34px;height:34px;border-radius:50%;background:var(--yel);color:var(--yelink);display:grid;place-items:center;font-weight:800;flex:none;font-family:Archivo,system-ui,sans-serif}
+.lubeck{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center}
+@media(max-width:760px){.lubeck{grid-template-columns:minmax(0,1fr)}}
+/* station view */
+.view{display:none}.view.on{display:block}
+.shead{background:var(--deep);color:#fff}
+.shead .wrap{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:24px;align-items:center}
+.shead .emb{width:180px;height:180px}
+@media(max-width:600px){.shead .wrap{grid-template-columns:minmax(0,1fr)}.shead .emb{width:120px;height:120px;order:-1}}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;align-items:center}
+.pill{background:rgba(255,255,255,.12);border-radius:20px;padding:4px 12px;font-size:15px}
+.timer{display:flex;align-items:center;gap:6px;background:var(--yel);color:var(--yelink);border-radius:24px;padding:4px 6px 4px 14px;font-weight:700}
+.timer output{font-family:Archivo,system-ui,sans-serif;font-size:20px;min-width:3.2em;font-variant-numeric:tabular-nums}
+.timer button{min-width:44px;min-height:40px;border:0;border-radius:20px;background:var(--yelink);color:var(--yel);cursor:pointer;font-weight:700;padding:0 12px}
+.cols{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(18px,3vw,36px);align-items:start}
+@media(max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
+.text{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(18px,3vw,30px)}
+.text p{max-width:66ch}
+.text h3{font-size:24px}
+.pn{font-family:Archivo,system-ui,sans-serif;font-weight:800;color:var(--green);font-size:14px;margin-right:6px}
+sup{font-size:.68em;font-weight:700;color:var(--green);margin-left:1px}
+.vocab{margin-top:14px;border:1.5px solid var(--line);border-radius:14px;padding:12px 16px;font-size:15px;line-height:1.55;background:var(--soft)}
+.vocab sup{margin-right:2px}
+.vocab span{margin-right:12px}
+.fact{border-left:0;background:var(--soft);border-radius:14px;padding:16px 18px;margin-top:16px}
+.fact strong{font-family:Archivo,system-ui,sans-serif}
+/* tasks */
+.tasks{display:grid;gap:16px}
+.task{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.task header{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.tn{flex:none;width:40px;height:40px;border-radius:10px;background:var(--deep);color:var(--yel);display:grid;place-items:center;font-family:Archivo,system-ui,sans-serif;font-weight:800;font-size:20px}
+.task header p{margin:0;font-weight:700}
+.sf{flex:none;margin-left:auto;border:2px solid var(--green);color:var(--green);border-radius:8px;padding:0 8px;font-weight:700;font-size:14px;line-height:28px}
+.help{font-size:15px;color:var(--muted);margin:8px 0 0}
+.starters{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.starters span{background:var(--soft);border-radius:8px;padding:4px 10px;font-size:15px}
+.book{display:inline-flex;align-items:center;gap:6px;background:var(--yel);color:var(--yelink);font-weight:700;border-radius:6px;padding:0 8px;font-size:14px}
+/* interactive */
+.rows{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,auto) 28px;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;background:var(--soft)}
+.row label{font-size:16px}
+select{font:inherit;font-size:16px;min-height:44px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:0 10px;max-width:100%}
+select:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+.mark{font-weight:800;text-align:center}
+.mark.ok{color:var(--ok)}.mark.no{color:var(--bad)}
+@media(max-width:520px){.row{grid-template-columns:minmax(0,1fr) 28px}.row select{grid-column:1}.row .mark{grid-row:1 / span 2;grid-column:2}}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.btn{min-height:44px;padding:0 18px;border-radius:22px;border:2px solid var(--deep);background:var(--deep);color:#fff;font-weight:700;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.score{font-weight:700}
+.tf{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;background:var(--soft)}
+.tf .choice{display:flex;gap:6px}
+.tf button{min-width:64px;min-height:44px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-weight:700}
+.tf button.sel{background:var(--deep);color:#fff;border-color:var(--deep)}
+.tf.ok{box-shadow:inset 4px 0 0 var(--ok)}.tf.no{box-shadow:inset 4px 0 0 var(--bad)}
+.tf .why{grid-column:1 / -1;font-size:15px;color:var(--muted);display:none}
+.tf.ok .why,.tf.no .why{display:block}
+.sortgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:10px}
+.bin{border:2px dashed var(--line);border-radius:12px;padding:10px;min-height:90px}
+.bin h4{margin:0 0 6px;font-family:Archivo,system-ui,sans-serif;font-size:16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;border-radius:22px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:0 14px;cursor:pointer}
+.chip.ok{border-color:var(--ok);color:var(--ok);font-weight:700}.chip.no{border-color:var(--bad);color:var(--bad);font-weight:700}
+details{margin-top:10px}
+summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
+.ans{background:var(--soft);border-radius:10px;padding:10px 14px}
+.geordie{font-family:Archivo,system-ui,sans-serif;font-size:19px}
+.next{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:28px}
+.next a{min-height:48px;display:inline-flex;align-items:center;padding:0 20px;border-radius:24px;text-decoration:none;font-weight:700;border:2px solid var(--deep)}
+.next a.fwd{background:var(--yel);color:var(--yelink);border-color:var(--yel)}
+/* results */
+table{border-collapse:collapse;width:100%;background:var(--card);border-radius:14px;overflow:hidden}
+th,td{border:1px solid var(--line);padding:12px;vertical-align:top;text-align:left}
+th{background:var(--deep);color:#fff;font-family:Archivo,system-ui,sans-serif;font-weight:600}
+td.blank{height:86px}
+.scroll{overflow-x:auto}
+@media(max-width:600px){table{font-size:14px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;white-space:normal;font-weight:700}.stack td:empty{display:none}.stack td.blank{height:56px;border-bottom:1px dashed var(--line)}}
+footer{color:var(--muted);font-size:14px}
+@media(prefers-reduced-motion:no-preference){.water line{animation:shimmer 6s ease-in-out infinite alternate}@keyframes shimmer{to{transform:translateX(14px)}}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#start"><span class="roundel">NE</span>The Northeast of England</a>
+  <nav aria-label="Stations">
+    <a href="#start">Start</a><a href="#station-1">1</a><a href="#station-2">2</a><a href="#station-3">3</a><a href="#station-4">4</a><a href="#station-5">5</a><a href="#results">Results</a>
+  </nav>
+</header>
+
+<!-- ============ START ============ -->
+<main id="start" class="view">
+  <section class="hero">
+    <div class="wrap">
+      <div style="padding-bottom:clamp(20px,4vw,48px)">
+        <span class="kicker">Unit 2 · Learning stations</span>
+        <h1>Welcome to the Northeast of England</h1>
+        <p class="lead" style="margin-top:16px">Coal, ships, bridges, Romans, Vikings, video games – and a dialect that sounds a bit like German. Travel along our line and find out how a region reinvented itself.</p>
+      </div>
+      <svg class="scene" viewBox="0 0 720 420" role="img" aria-label="Illustration of Newcastle Quayside at dusk with the green Tyne Bridge, the Glasshouse music centre and the Angel of the North on a hill">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f5a50"/><stop offset=".65" stop-color="#e9a86b"/><stop offset="1" stop-color="#f6d79a"/></linearGradient>
+          <linearGradient id="riv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#21524a"/><stop offset="1" stop-color="#0e302b"/></linearGradient>
+          <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e7f1f0"/><stop offset="1" stop-color="#8fb6b4"/></linearGradient>
+        </defs>
+        <rect width="720" height="420" rx="18" fill="url(#sky)"/>
+        <circle cx="560" cy="150" r="34" fill="#ffe6a8" opacity=".9"/>
+        <path d="M0 270 Q120 220 230 250 T470 240 T720 250 V300 H0Z" fill="#2d5d4f" opacity=".55"/>
+        <!-- Angel of the North on the hill -->
+        <g transform="translate(96 214)" fill="#8a3f1c"><rect x="-2.5" y="0" width="5" height="34"/><circle cx="0" cy="-3" r="3.5"/><path d="M-30 8 L30 8 L28 13 L-28 13Z" transform="rotate(-4)"/></g>
+        <!-- left quay buildings -->
+        <g fill="#163e37"><rect x="0" y="236" width="40" height="70"/><rect x="38" y="250" width="30" height="56"/><rect x="66" y="228" width="26" height="78"/><path d="M66 228 l13 -14 l13 14z"/></g>
+        <g fill="#ffd66b" opacity=".9"><rect x="8" y="250" width="6" height="8"/><rect x="22" y="266" width="6" height="8"/><rect x="72" y="244" width="5" height="7"/><rect x="45" y="262" width="5" height="7"/></g>
+        <!-- Tyne Bridge -->
+        <g stroke="#4f8a63" fill="none" stroke-linecap="round">
+          <path d="M120 300 Q300 40 480 300" stroke-width="11"/>
+          <path d="M140 300 Q300 76 460 300" stroke-width="4"/>
+          <g stroke-width="2.5" id="hang">
+            <line x1="180" y1="228" x2="180" y2="290"/><line x1="210" y1="203" x2="210" y2="290"/><line x1="240" y1="184" x2="240" y2="290"/><line x1="270" y1="174" x2="270" y2="290"/><line x1="300" y1="170" x2="300" y2="290"/><line x1="330" y1="174" x2="330" y2="290"/><line x1="360" y1="184" x2="360" y2="290"/><line x1="390" y1="203" x2="390" y2="290"/><line x1="420" y1="228" x2="420" y2="290"/>
+          </g>
+        </g>
+        <rect x="96" y="286" width="408" height="12" fill="#3f7a58"/>
+        <g fill="#c9bfae"><rect x="100" y="232" width="34" height="84"/><rect x="466" y="232" width="34" height="84"/></g>
+        <g fill="#a8a08f"><rect x="100" y="232" width="34" height="8"/><rect x="466" y="232" width="34" height="8"/><rect x="112" y="250" width="10" height="22" rx="5"/><rect x="478" y="250" width="10" height="22" rx="5"/></g>
+        <!-- Glasshouse -->
+        <path d="M510 316 C510 262 548 250 568 262 C584 238 624 234 642 256 C660 240 704 248 712 290 L716 316Z" fill="url(#glass)" stroke="#5f8d8a" stroke-width="2"/>
+        <g stroke="#6f9c98" stroke-width="1.2" opacity=".8"><line x1="540" y1="262" x2="540" y2="316"/><line x1="570" y1="258" x2="570" y2="316"/><line x1="600" y1="246" x2="600" y2="316"/><line x1="630" y1="248" x2="630" y2="316"/><line x1="660" y1="252" x2="660" y2="316"/><line x1="690" y1="266" x2="690" y2="316"/></g>
+        <!-- Millennium Bridge (foreground, low) -->
+        <path d="M520 342 Q620 296 716 342" stroke="#f3f3ee" stroke-width="5" fill="none"/>
+        <path d="M520 342 L716 342" stroke="#f3f3ee" stroke-width="3"/>
+        <!-- river -->
+        <rect x="0" y="316" width="720" height="104" fill="url(#riv)"/>
+        <g class="water" stroke="#f2c27f" stroke-width="3" stroke-linecap="round" opacity=".55">
+          <line x1="250" y1="340" x2="330" y2="340"/><line x1="200" y1="360" x2="290" y2="360"/><line x1="320" y1="372" x2="400" y2="372"/><line x1="560" y1="370" x2="610" y2="370"/><line x1="60" y1="352" x2="120" y2="352"/>
+        </g>
+        <path d="M300 404 Q332 396 364 404" stroke="#fff" stroke-width="3" fill="none" opacity=".35"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <h2>Choose your station</h2>
+      <p style="color:var(--muted);margin-top:8px">Tap a stop on the line. Your teacher will tell you where your group starts.</p>
+      <nav class="map" aria-label="Station line">
+        <ol class="stops" id="stops">
+          <li><a href="#station-1"><span class="dot">1</span><b>Coal &amp; Ships</b><span>The Northeast then</span></a></li>
+          <li><a href="#station-2"><span class="dot">2</span><b>Icons on the Tyne</b><span>Bridges, Angel, Glasshouse</span></a></li>
+          <li><a href="#station-3"><span class="dot">3</span><b>Why aye, man!</b><span>The Geordie dialect</span></a></li>
+          <li><a href="#station-4"><span class="dot">4</span><b>Walls, Vikings &amp; Stars</b><span>History and nature</span></a></li>
+          <li><a href="#station-5"><span class="dot">5</span><b>The Northeast today</b><span>New jobs, new ideas</span></a></li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <section class="band howto">
+    <div class="wrap">
+      <h2>How the stations work</h2>
+      <div class="grid3" style="margin-top:18px">
+        <div class="card"><h3><span class="ico">1</span>Work as a team</h3><p>Work in groups of three or four. Each station takes about 12 minutes – start the timer at the top of the station.</p></div>
+        <div class="card"><h3><span class="ico">2</span>Use your book</h3><p>Keep your textbook open at pages 40–41. Some tasks ask you to look at the photos A–G again.</p></div>
+        <div class="card"><h3><span class="ico">3</span>Write it down</h3><p>Write your answers in your exercise book. At the end, fill in the <a href="#results">results grid</a> and share your findings with the class.</p></div>
+      </div>
+      <p class="help" style="margin-top:14px">Social forms: <b>IW</b> = individual work · <b>PW</b> = pair work · <b>GW</b> = group work</p>
+    </div>
+  </section>
+</main>
+
+<!-- ============ STATION 1 ============ -->
+<main id="station-1" class="view">
+  <section class="shead band">
+    <div class="wrap">
+      <div>
+        <span class="kicker">Station 1</span>
+        <h1>Coal &amp; Ships</h1>
+        <p class="lead" style="margin-top:10px;opacity:.9">How black coal and huge ships made the Northeast famous – and what happened when they disappeared.</p>
+        <div class="meta"><span class="pill">≈ 12 minutes</span><span class="timer" data-t="720"><output>12:00</output><button type="button" data-a="go">Start</button><button type="button" data-a="reset" aria-label="Reset timer">↺</button></span></div>
+      </div>
+      <svg class="emb" viewBox="0 0 180 180" aria-hidden="true"><circle cx="90" cy="90" r="88" fill="#ffcf00"/><g stroke="#103d36" stroke-width="7" fill="none" stroke-linecap="round"><path d="M50 150 L90 64 L130 150"/><path d="M62 124 H118"/><circle cx="90" cy="56" r="22"/><path d="M90 34 V78 M68 56 H112 M74 40 L106 72 M106 40 L74 72" stroke-width="4"/></g><path d="M30 150 H150" stroke="#103d36" stroke-width="7"/></svg>
+    </div>
+  </section>
+  <section class="band"><div class="wrap cols">
+    <article class="text">
+      <h3>From black gold to empty shipyards</h3>
+      <p><span class="pn">¶1</span>For hundreds of years, the Northeast was famous for one thing: coal. There was so much coal under the ground that people still say “carrying coals to Newcastle” when somebody does something completely useless. Miners worked deep underground in hard and dangerous conditions, and many families lived in pit villages<sup>1</sup> right next to the mines.</p>
+      <p><span class="pn">¶2</span>Coal and iron helped another industry to grow: shipbuilding. In the 19th and 20th centuries, the River Tyne was one of the great shipbuilding rivers of the world. Thousands of men worked in shipyards<sup>2</sup> such as Swan Hunter in Wallsend. In 1906 Swan Hunter launched<sup>3</sup> the <i>Mauretania</i> – at that time the largest and fastest passenger ship in the world.</p>
+      <p><span class="pn">¶3</span>After the Second World War, other countries built ships more cheaply, and Britain needed less coal. One by one, the pits and shipyards closed. In 1977 the last super-tanker left the Tyne. The last deep coal mine in the Northeast, Ellington Colliery<sup>4</sup>, closed in 2005, and Swan Hunter’s yards closed in 2007. Many people lost their jobs, and whole towns had to look for a new future<sup>5</sup>.</p>
+      <div class="vocab"><span><sup>1</sup>pit village – a village where most people worked in the local coal mine (pit)</span> <span><sup>2</sup>shipyard – a place where ships are built</span> <span><sup>3</sup>to launch a ship – to put a new ship into the water for the first time</span> <span><sup>4</sup>colliery – a coal mine with all its buildings</span> <span><sup>5</sup>future – the time that will come</span></div>
+    </article>
+    <div class="tasks">
+      <section class="task"><header><span class="tn">1</span><p>Look at photo G in your book. Describe what you can see and explain how the photo is connected to the text.</p><span class="sf">IW</span></header><span class="book">Book p. 41 · photo G</span></section>
+      <section class="task"><header><span class="tn">2</span><p>Put the history of the Tyne in order. Match each event with the correct year.</p><span class="sf">PW</span></header>
+        <div class="rows" data-match="m1"></div>
+        <div class="btns"><button class="btn" data-check="m1">Check</button><button class="btn ghost" data-show="m1">Show answers</button><span class="score" aria-live="polite"></span></div>
+      </section>
+      <section class="task"><header><span class="tn">3</span><p>Explain the saying “carrying coals to Newcastle” in your own words. Do you know a saying in another language with the same meaning?</p><span class="sf">PW</span></header>
+        <div class="starters"><span>It means that …</span><span>It is useless because …</span><span>A similar saying is …</span></div>
+      </section>
+      <section class="task"><header><span class="tn">4</span><p>Discuss: What problems did families in pit villages and shipbuilding towns probably have when the mines and yards closed? Collect at least three ideas.</p><span class="sf">GW</span></header></section>
+    </div>
+  </div>
+  <div class="wrap next"><a href="#start">← All stations</a><a class="fwd" href="#station-2">Next: Station 2 →</a></div>
+  </section>
+</main>
+
+<!-- ============ STATION 2 ============ -->
+<main id="station-2" class="view">
+  <section class="shead band">
+    <div class="wrap">
+      <div>
+        <span class="kicker">Station 2</span>
+        <h1>Icons on the Tyne</h1>
+        <p class="lead" style="margin-top:10px;opacity:.9">Four landmarks that tell the story of a region – and one of them has a new name.</p>
+        <div class="meta"><span class="pill">≈ 12 minutes</span><span class="timer" data-t="720"><output>12:00</output><button type="button" data-a="go">Start</button><button type="button" data-a="reset" aria-label="Reset timer">↺</button></span></div>
+      </div>
+      <svg class="emb" viewBox="0 0 180 180" aria-hidden="true"><circle cx="90" cy="90" r="88" fill="#ffcf00"/><g fill="#8a3f1c"><path d="M82 66 H98 L102 150 H78Z"/><circle cx="90" cy="54" r="11"/><path d="M20 78 L160 78 L156 96 L24 96Z"/><path d="M28 78 V96 M44 78 V96 M60 78 V96 M120 78 V96 M136 78 V96 M152 78 V96" stroke="#5e2a12" stroke-width="2"/></g><path d="M40 150 H140" stroke="#103d36" stroke-width="7" stroke-linecap="round"/></svg>
+    </div>
+  </section>
+  <section class="band"><div class="wrap cols">
+    <article class="text">
+      <h3>Four icons, four stories</h3>
+      <p><span class="pn">¶1</span><b>The Tyne Bridge</b> was opened by King George V in 1928. It is painted green, and today about 70,000 vehicles cross it every day. It was finished before the famous Sydney Harbour Bridge in Australia, which looks very similar.</p>
+      <p><span class="pn">¶2</span><b>The Gateshead Millennium Bridge</b> (2001) is only for people on foot and on bikes. When a ship needs to pass, the whole bridge tilts<sup>1</sup> upwards. Because of its shape, locals call it the “Blinking Eye”.</p>
+      <p><span class="pn">¶3</span><b>The Glasshouse</b> is a concert hall and music school on the south bank of the river. It opened in 2004 as “Sage Gateshead” – the name in your book. In 2023 it got a new name, The Glasshouse International Centre for Music, because a new arena next door took the name “Sage”. Its walls are made of 630 panes<sup>2</sup> of glass.</p>
+      <p><span class="pn">¶4</span><b>The Angel of the North</b> by the artist Antony Gormley was put up in 1998. It is 20 metres high, its wings are 54 metres wide, and it weighs about 200 tonnes. It stands on the site of an old colliery. Gormley said that the Angel remembers the miners who worked under the ground there for two hundred years. It also shows the change from the industrial<sup>3</sup> age to the information age.</p>
+      <div class="vocab"><span><sup>1</sup>to tilt – to move so that one side is higher than the other</span> <span><sup>2</sup>pane – one piece of glass in a window</span> <span><sup>3</sup>industrial – connected with factories, mines and heavy work</span></div>
+    </article>
+    <div class="tasks">
+      <section class="task"><header><span class="tn">1</span><p>Number detectives: Which number belongs to which fact?</p><span class="sf">PW</span></header>
+        <div class="rows" data-match="m2"></div>
+        <div class="btns"><button class="btn" data-check="m2">Check</button><button class="btn ghost" data-show="m2">Show answers</button><span class="score" aria-live="polite"></span></div>
+      </section>
+      <section class="task"><header><span class="tn">2</span><p>Look at photo C in your book. Explain why the caption is no longer correct and write a new caption.</p><span class="sf">IW</span></header><span class="book">Book p. 41 · photo C</span></section>
+      <section class="task"><header><span class="tn">3</span><p>Why would an artist build an angel on top of an old coal mine? Discuss and write two or three sentences.</p><span class="sf">GW</span></header>
+        <div class="starters"><span>I think the Angel stands for …</span><span>The wings could show …</span><span>For the people of the Northeast it means …</span></div>
+      </section>
+    </div>
+  </div>
+  <div class="wrap next"><a href="#station-1">← Station 1</a><a class="fwd" href="#station-3">Next: Station 3 →</a></div>
+  </section>
+</main>
+
+<!-- ============ STATION 3 ============ -->
+<main id="station-3" class="view">
+  <section class="shead band">
+    <div class="wrap">
+      <div>
+        <span class="kicker">Station 3</span>
+        <h1>Why aye, man!</h1>
+        <p class="lead" style="margin-top:10px;opacity:.9">People from Tyneside are called Geordies – and so is the way they speak. You might understand more than you think.</p>
+        <div class="meta"><span class="pill">≈ 12 minutes</span><span class="timer" data-t="720"><output>12:00</output><button type="button" data-a="go">Start</button><button type="button" data-a="reset" aria-label="Reset timer">↺</button></span></div>
+      </div>
+      <svg class="emb" viewBox="0 0 180 180" aria-hidden="true"><circle cx="90" cy="90" r="88" fill="#ffcf00"/><path d="M34 52 H146 V114 H82 L56 140 V114 H34Z" fill="#103d36"/><text x="90" y="94" font-family="Archivo, Arial, sans-serif" font-weight="800" font-size="24" fill="#ffcf00" text-anchor="middle">Howay!</text></svg>
+    </div>
+  </section>
+  <section class="band"><div class="wrap cols">
+    <article class="text">
+      <h3>A very old way of speaking</h3>
+      <p><span class="pn">¶1</span>An <b>accent</b> is the way you pronounce words. A <b>dialect</b> is more: it has its own words and sometimes its own grammar. Geordie is both – a strong accent and a dialect.</p>
+      <p><span class="pn">¶2</span>Many Geordie words are very old. In the 5th century, the Angles came to Britain from what is today northern Germany and Denmark, and some of their words are still used on Tyneside. A Geordie calls a child a <i>bairn</i> – in Danish it is <i>barn</i>. To go is <i>gan</i> – compare it with German <i>gehen</i>. And home is <i>hyem</i>.</p>
+      <p><span class="pn">¶3</span>The most famous Geordie word is probably <i>howay</i>. It means “come on!” – and you can hear it every Saturday when thousands of fans cheer for Newcastle United, the football club of “the Toon”<sup>1</sup>.</p>
+      <div class="vocab"><span><sup>1</sup>the Toon – Geordie for “the town”: Newcastle and its city centre</span></div>
+      <div class="fact"><strong>Listen out!</strong> Geordies often call a friend <i>marra</i> and a woman or girl <i>hinny</i> (“honey”). If something is <i>canny</i>, it is good or nice.</div>
+    </article>
+    <div class="tasks">
+      <section class="task"><header><span class="tn">1</span><p>Match the Geordie words with their meaning in standard English.</p><span class="sf">PW</span></header>
+        <div class="rows" data-match="m3"></div>
+        <div class="btns"><button class="btn" data-check="m3">Check</button><button class="btn ghost" data-show="m3">Show answers</button><span class="score" aria-live="polite"></span></div>
+      </section>
+      <section class="task"><header><span class="tn">2</span><p>Translate the sentences into standard English. Then check your answers.</p><span class="sf">PW</span></header>
+        <p class="geordie">a) “Howay, man, we’re gannin’ doon the Toon!”</p>
+        <p class="geordie">b) “Aye, that’s a canny bairn.”</p>
+        <p class="geordie">c) “Divvn’t forget yer bait, hinny!”</p>
+        <details><summary>Show possible answers</summary><div class="ans">a) Come on, we’re going down to the town centre!<br>b) Yes, that’s a nice child.<br>c) Don’t forget your packed lunch, dear!</div></details>
+      </section>
+      <section class="task"><header><span class="tn">3</span><p>In Lübeck, people say “Moin” and some still speak Low German. Collect words from Low German or another dialect you know and compare them with Geordie. Which words are similar?</p><span class="sf">GW</span></header>
+        <div class="starters"><span>In Low German, people say … for …</span><span>This is similar to the Geordie word …</span></div>
+      </section>
+    </div>
+  </div>
+  <div class="wrap next"><a href="#station-2">← Station 2</a><a class="fwd" href="#station-4">Next: Station 4 →</a></div>
+  </section>
+</main>
+
+<!-- ============ STATION 4 ============ -->
+<main id="station-4" class="view">
+  <section class="shead band">
+    <div class="wrap">
+      <div>
+        <span class="kicker">Station 4</span>
+        <h1>Walls, Vikings &amp; Stars</h1>
+        <p class="lead" style="margin-top:10px;opacity:.9">Leave the city behind: Romans, monks, Vikings, castles and some of the darkest skies in Europe.</p>
+        <div class="meta"><span class="pill">≈ 12 minutes</span><span class="timer" data-t="720"><output>12:00</output><button type="button" data-a="go">Start</button><button type="button" data-a="reset" aria-label="Reset timer">↺</button></span></div>
+      </div>
+      <svg class="emb" viewBox="0 0 180 180" aria-hidden="true"><circle cx="90" cy="90" r="88" fill="#103d36" stroke="#ffcf00" stroke-width="4"/><g fill="#ffcf00"><circle cx="50" cy="48" r="3"/><circle cx="120" cy="36" r="2.5"/><circle cx="140" cy="66" r="3"/><circle cx="84" cy="30" r="2"/><path d="M104 54 l4 -10 l4 10 l10 4 l-10 4 l-4 10 l-4 -10 l-10 -4z"/></g><path d="M14 128 Q60 96 100 112 T170 104 V140 H14Z" fill="#3f7a58"/><g fill="#c9bfae"><path d="M20 122 H90 V110 H96 V104 H104 V110 H110 V122 H160 V132 H20Z"/></g></svg>
+    </div>
+  </section>
+  <section class="band"><div class="wrap cols">
+    <article class="text">
+      <h3>2,000 years of history – and a lot of sky</h3>
+      <p><span class="pn">¶1</span><b>Hadrian’s Wall.</b> In AD 122, the Roman emperor Hadrian ordered his army to build a stone wall right across northern Britain. It is about 117 km (73 miles) long and runs from coast to coast. Its eastern end is in a town on the Tyne which is still called <i>Wallsend</i>. There, you can visit the old Roman fort<sup>1</sup> Segedunum. Since 1987 the wall has been a UNESCO World Heritage Site.</p>
+      <p><span class="pn">¶2</span><b>Lindisfarne.</b> North of Newcastle lies Lindisfarne, also called Holy Island. You can only drive there at low tide<sup>2</sup> on a road through the sea – at high tide, the road is under water, and every year some visitors get stuck. In 793, Vikings attacked the monastery<sup>3</sup> on the island. The news shocked people all over Europe. Not far away is Bamburgh, once home of the kings of Northumbria.</p>
+      <p><span class="pn">¶3</span><b>Dark skies.</b> Northumberland National Park and Kielder Water &amp; Forest Park form one of the largest Dark Sky Parks in Europe. There is so little artificial light that on a clear night you can see the Milky Way. Kielder Water is the largest man-made lake in northern Europe.</p>
+      <div class="vocab"><span><sup>1</sup>fort – a strong building for soldiers</span> <span><sup>2</sup>tide – the rise and fall of the sea (low tide / high tide)</span> <span><sup>3</sup>monastery – a place where monks live and work</span></div>
+    </article>
+    <div class="tasks">
+      <section class="task"><header><span class="tn">1</span><p>True or false? Decide and check.</p><span class="sf">PW</span></header>
+        <div class="rows" data-tf="t4"></div>
+        <div class="btns"><button class="btn" data-checktf="t4">Check</button><span class="score" aria-live="polite"></span></div>
+      </section>
+      <section class="task"><header><span class="tn">2</span><p>Look at photo E in your book. Describe the landscape and say what a family could do there.</p><span class="sf">IW</span></header><span class="book">Book p. 41 · photo E</span></section>
+      <section class="task"><header><span class="tn">3</span><p>Plan a weekend trip to the Northeast for your class. Choose two places from this station and give reasons for your choice.</p><span class="sf">GW</span></header>
+        <div class="starters"><span>On Saturday we will visit … because …</span><span>On Sunday we can …</span><span>Don’t forget to …</span></div>
+      </section>
+    </div>
+  </div>
+  <div class="wrap next"><a href="#station-3">← Station 3</a><a class="fwd" href="#station-5">Next: Station 5 →</a></div>
+  </section>
+</main>
+
+<!-- ============ STATION 5 ============ -->
+<main id="station-5" class="view">
+  <section class="shead band">
+    <div class="wrap">
+      <div>
+        <span class="kicker">Station 5</span>
+        <h1>The Northeast today</h1>
+        <p class="lead" style="margin-top:10px;opacity:.9">After coal and ships: cars, games, culture – and a German twin town.</p>
+        <div class="meta"><span class="pill">≈ 12 minutes</span><span class="timer" data-t="720"><output>12:00</output><button type="button" data-a="go">Start</button><button type="button" data-a="reset" aria-label="Reset timer">↺</button></span></div>
+      </div>
+      <svg class="emb" viewBox="0 0 180 180" aria-hidden="true"><circle cx="90" cy="90" r="88" fill="#ffcf00"/><rect x="40" y="62" width="100" height="60" rx="30" fill="#103d36"/><g fill="#ffcf00"><rect x="60" y="86" width="22" height="7" rx="3"/><rect x="67" y="79" width="7" height="22" rx="3"/><circle cx="112" cy="84" r="5"/><circle cx="122" cy="96" r="5"/></g></svg>
+    </div>
+  </section>
+  <section class="band"><div class="wrap cols">
+    <article class="text">
+      <h3>New jobs, new ideas</h3>
+      <p><span class="pn">¶1</span>When the mines and shipyards closed, the Northeast had to reinvent itself. In 1986, the Japanese company Nissan opened a car factory in Sunderland, on the site of an old airfield<sup>1</sup>. Today around 6,000 people work there, and the plant also builds electric cars.</p>
+      <p><span class="pn">¶2</span>The region has also become a centre for video games. More than 60 games companies are based here – for example Ubisoft Reflections in Newcastle. Five universities, hospitals, shops, tourism and culture, like the Glasshouse or the BALTIC art gallery, give many people work.</p>
+      <p><span class="pn">¶3</span>Newcastle has a German twin town<sup>2</sup>: Gelsenkirchen in the Ruhr area. The two cities became partners in 1948 – because both lived from coal. Today both have had to find new jobs for the people who once worked in the mines.</p>
+      <div class="vocab"><span><sup>1</sup>airfield – a small airport</span> <span><sup>2</sup>twin town – a town that has a special friendship with a town in another country</span></div>
+      <div class="fact"><strong>Lübeck connection:</strong> Lübeck had a big shipyard too. The Flender shipyard built nearly 700 ships – and closed in 2002, just a few years before Swan Hunter on the Tyne.</div>
+    </article>
+    <div class="tasks">
+      <section class="task"><header><span class="tn">1</span><p>Then or now? Sort the jobs: tap each job and choose the right column.</p><span class="sf">PW</span></header>
+        <div data-sort="s5"></div>
+        <div class="btns"><button class="btn" data-checksort="s5">Check</button><button class="btn ghost" data-resetsort="s5">Start again</button><span class="score" aria-live="polite"></span></div>
+      </section>
+      <section class="task"><header><span class="tn">2</span><p>Compare Lübeck and the Northeast. Copy the table into your exercise book and complete it.</p><span class="sf">GW</span></header>
+        <div class="scroll"><table class="stack"><thead><tr><th>Topic</th><th>Newcastle / Northeast</th><th>Lübeck</th></tr></thead>
+        <tbody><tr><td>River and sea</td><td>River Tyne, North Sea</td><td></td></tr><tr><td>Old industry</td><td></td><td></td></tr><tr><td>UNESCO site</td><td></td><td></td></tr><tr><td>Famous building</td><td></td><td></td></tr></tbody></table></div>
+      </section>
+      <section class="task"><header><span class="tn">3</span><p>Your book asks: Would you like to visit the area, or even live there? Discuss in your group and give reasons. Use facts from at least two stations.</p><span class="sf">GW</span></header>
+        <div class="starters"><span>I would like to live there because …</span><span>I wouldn’t like to live there because …</span><span>On the one hand … on the other hand …</span></div>
+      </section>
+    </div>
+  </div>
+  <div class="wrap next"><a href="#station-4">← Station 4</a><a class="fwd" href="#results">Go to the results grid →</a></div>
+  </section>
+</main>
+
+<!-- ============ RESULTS ============ -->
+<main id="results" class="view">
+  <section class="shead band">
+    <div class="wrap">
+      <div>
+        <span class="kicker">Plenary</span>
+        <h1>Our results</h1>
+        <p class="lead" style="margin-top:10px;opacity:.9">Copy the grid into your exercise book. Fill in one line for every station you visited, then share your findings with the class.</p>
+      </div>
+      <svg class="emb" viewBox="0 0 180 180" aria-hidden="true"><circle cx="90" cy="90" r="88" fill="#ffcf00"/><g stroke="#103d36" stroke-width="6" fill="none"><rect x="42" y="42" width="96" height="96" rx="10"/><path d="M42 74 H138 M42 106 H138 M82 42 V138"/></g></svg>
+    </div>
+  </section>
+  <section class="band"><div class="wrap">
+    <div class="scroll"><table class="stack">
+      <thead><tr><th>Station</th><th>Then (the past)</th><th>Now (today)</th><th>The most surprising fact</th><th>A question we still have</th></tr></thead>
+      <tbody>
+        <tr><td><b>1</b> Coal &amp; Ships</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td><b>2</b> Icons on the Tyne</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td><b>3</b> Why aye, man!</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td><b>4</b> Walls, Vikings &amp; Stars</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        <tr><td><b>5</b> The Northeast today</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      </tbody>
+    </table></div>
+    <div class="grid3" style="margin-top:24px">
+      <section class="task"><header><span class="tn">1</span><p>Report one result from your group to the class. Speak for about 30 seconds.</p><span class="sf">GW</span></header><div class="starters"><span>At station … we found out that …</span><span>We were surprised that …</span></div></section>
+      <section class="task"><header><span class="tn">2</span><p>Go back to task 1 b) in your book. Add new “relationships” to your mind map, e.g. coal → Angel of the North.</p><span class="sf">PW</span></header><span class="book">Book p. 40 · task 1 b)</span></section>
+      <section class="task"><header><span class="tn">3</span><p>Write a short text (80–100 words): How has the Northeast changed? Use the words <i>in the past</i>, <i>however</i> and <i>today</i>.</p><span class="sf">IW</span></header><span class="book">Book p. 40 · EXTRA</span></section>
+    </div>
+  </div></section>
+  <footer class="band" style="padding-top:0"><div class="wrap">Illustrations drawn for this page. Facts checked in November 2026 (sources: Gateshead Council, Newcastle City Council, English Heritage, The Glasshouse, Northumberland Dark Sky Park, UNESCO).</div></footer>
+</main>
+
+<script>
+{
+const M={
+ m1:{opts:["1906","1928","1977","2005","2007"],items:[["Swan Hunter launches the Mauretania.","1906"],["The Tyne Bridge opens.","1928"],["The last super-tanker is built on the Tyne.","1977"],["The last deep coal mine in the Northeast closes.","2005"],["Swan Hunter’s shipyards close.","2007"]]},
+ m2:{opts:["20","54","630","1928","2001","70,000"],items:[["Height of the Angel of the North in metres","20"],["Width of the Angel’s wings in metres","54"],["Panes of glass in the walls of the Glasshouse","630"],["Year the Tyne Bridge opened","1928"],["Year the Millennium Bridge opened","2001"],["Vehicles crossing the Tyne Bridge every day","70,000"]]},
+ m3:{opts:["child","come on!","go","good / nice","yes","friend","food / packed lunch","home"],items:[["bairn","child"],["howay","come on!"],["gan","go"],["canny","good / nice"],["aye","yes"],["marra","friend"],["bait","food / packed lunch"],["hyem","home"]]}
+};
+const TF={t4:[
+ ["Hadrian’s Wall was built by the Vikings.",false,"False – it was built by the Roman army from AD 122."],
+ ["The town of Wallsend is at the eastern end of Hadrian’s Wall.",true,"True – the name says it: the wall’s end."],
+ ["You can drive to Lindisfarne at any time of day.",false,"False – at high tide the road is under water."],
+ ["In 793, Vikings attacked the monastery on Lindisfarne.",true,"True – the attack shocked people all over Europe."],
+ ["Hadrian’s Wall is about 117 km long.",true,"True – about 73 miles from coast to coast."],
+ ["Hadrian’s Wall and Lübeck’s old town both became UNESCO World Heritage Sites in 1987.",true,"True – the same year!"]
+]};
+const SORT={s5:[["coal miner","then"],["shipbuilder in Wallsend","then"],["car worker at Nissan","now"],["video game designer","now"],["musician at the Glasshouse","now"],["worker on a coal ship","then"],["tour guide at Hadrian’s Wall","now"]]};
+
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+
+document.querySelectorAll("[data-match]").forEach(box=>{
+  const id=box.dataset.match,d=M[id];
+  box.innerHTML=d.items.map((it,i)=>`<div class="row"><label for="${id}-${i}">${esc(it[0])}</label><select id="${id}-${i}"><option value="">choose …</option>${d.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select><span class="mark" aria-hidden="true"></span></div>`).join("");
+});
+const score=(btn,n,t)=>{btn.closest(".task").querySelector(".score").textContent=`${n} / ${t} correct`};
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.check){const id=b.dataset.check,d=M[id];let n=0;
+    d.items.forEach((it,i)=>{const s=document.getElementById(`${id}-${i}`),m=s.parentElement.querySelector(".mark"),ok=s.value===it[1];if(ok)n++;m.textContent=s.value?(ok?"✓":"✗"):"";m.className="mark "+(s.value?(ok?"ok":"no"):"")});
+    score(b,n,d.items.length)}
+  if(b.dataset.show){const id=b.dataset.show,d=M[id];d.items.forEach((it,i)=>{const s=document.getElementById(`${id}-${i}`);s.value=it[1];const m=s.parentElement.querySelector(".mark");m.textContent="✓";m.className="mark ok"});b.closest(".task").querySelector(".score").textContent=""}
+  if(b.dataset.tfv){const row=b.closest(".tf");row.querySelectorAll("button").forEach(x=>x.classList.toggle("sel",x===b));row.classList.remove("ok","no")}
+  if(b.dataset.checktf){const id=b.dataset.checktf;let n=0;document.querySelectorAll(`[data-tf="${id}"] .tf`).forEach((row,i)=>{const sel=row.querySelector("button.sel");row.classList.remove("ok","no");if(!sel)return;const ok=(sel.dataset.tfv==="t")===TF[id][i][1];if(ok)n++;row.classList.add(ok?"ok":"no")});score(b,n,TF[id].length)}
+  if(b.dataset.chip){const c=b,cur=c.dataset.bin;const next=cur==="pool"?"then":cur==="then"?"now":"pool";c.dataset.bin=next;c.classList.remove("ok","no");placeChips(c.closest("[data-sort]"))}
+  if(b.dataset.checksort){const box=document.querySelector(`[data-sort="${b.dataset.checksort}"]`);let n=0;box.querySelectorAll(".chip").forEach(c=>{c.classList.remove("ok","no");if(c.dataset.bin==="pool")return;const ok=c.dataset.bin===c.dataset.ans;if(ok)n++;c.classList.add(ok?"ok":"no")});score(b,n,SORT[b.dataset.checksort].length)}
+  if(b.dataset.resetsort){const box=document.querySelector(`[data-sort="${b.dataset.resetsort}"]`);box.querySelectorAll(".chip").forEach(c=>{c.dataset.bin="pool";c.classList.remove("ok","no")});placeChips(box);b.closest(".task").querySelector(".score").textContent=""}
+});
+document.querySelectorAll("[data-tf]").forEach(box=>{
+  box.innerHTML=TF[box.dataset.tf].map(q=>`<div class="tf"><span>${esc(q[0])}</span><span class="choice"><button type="button" data-tfv="t">True</button><button type="button" data-tfv="f">False</button></span><span class="why">${esc(q[2])}</span></div>`).join("");
+});
+function placeChips(box){
+  ["pool","then","now"].forEach(bn=>{const tgt=box.querySelector(`[data-binbox="${bn}"]`);box.querySelectorAll(`.chip[data-bin="${bn}"]`).forEach(c=>tgt.appendChild(c))});
+}
+document.querySelectorAll("[data-sort]").forEach(box=>{
+  box.innerHTML=`<p class="help" style="margin-top:0">Tap once → Then · tap twice → Now · tap again → back.</p><div class="chips" data-binbox="pool">${shuffle(SORT[box.dataset.sort]).map(j=>`<button type="button" class="chip" data-chip="1" data-bin="pool" data-ans="${j[1]}">${esc(j[0])}</button>`).join("")}</div><div class="sortgrid"><div class="bin"><h4>Then</h4><div class="chips" data-binbox="then"></div></div><div class="bin"><h4>Now</h4><div class="chips" data-binbox="now"></div></div></div>`;
+});
+
+/* timers */
+document.querySelectorAll(".timer").forEach(t=>{
+  const total=+t.dataset.t,out=t.querySelector("output"),go=t.querySelector('[data-a="go"]');let left=total,iv=null;
+  const show=()=>{out.textContent=`${String(Math.floor(left/60)).padStart(2,"0")}:${String(left%60).padStart(2,"0")}`;out.style.color=left<=60?"#b3261e":""};
+  go.addEventListener("click",()=>{if(iv){clearInterval(iv);iv=null;go.textContent="Start";return}if(left<=0)left=total;iv=setInterval(()=>{left--;show();if(left<=0){clearInterval(iv);iv=null;go.textContent="Start";out.textContent="Time!"}},1000);go.textContent="Pause"});
+  t.querySelector('[data-a="reset"]').addEventListener("click",()=>{clearInterval(iv);iv=null;left=total;go.textContent="Start";show()});
+});
+
+/* router */
+const views=[...document.querySelectorAll(".view")],visited=new Set();
+function route(){
+  const h=location.hash.slice(1),v=views.find(x=>x.id===h)||views[0];
+  views.forEach(x=>x.classList.toggle("on",x===v));
+  document.querySelectorAll(".top nav a").forEach(a=>a.setAttribute("aria-current",a.getAttribute("href")==="#"+v.id));
+  if(v.id.startsWith("station-"))visited.add(v.id);
+  document.querySelectorAll("#stops li").forEach(li=>li.classList.toggle("done",visited.has(li.querySelector("a").getAttribute("href").slice(1))));
+  window.scrollTo(0,0);
+}
+addEventListener("hashchange",route);route();
+}
+</script>
+</body>
+</html>
